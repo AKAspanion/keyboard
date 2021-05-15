@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --keys-width: min(calc(90vw), 1000px);
+  --keys-height: calc(var(--keys-width) * 0.25);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.keyboard__container {
+  margin: 0px auto;
+  width: var(--keys-width);
+}
+
+.keyboard__key__white__container {
+  gap: 2px;
+  display: flex;
+  flex-wrap: nowrap;
+  width: var(--keys-width);
+  background-color: #141312;
+}
+
+.keyboard__key__white {
+  border-radius: 6px;
+  background: #ffffff;
+  height: var(--keys-height);
+  width: calc(calc(100% - 26px) / 15);
+  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.88) inset,
+    5px 5px 11px -1px rgba(0, 0, 0, 0.79);
+}
+
+.keyboard__key__white:active,
+.keyboard__key__white.keyboard__key__white--pressed {
+  transition: all 0.2s ease;
+  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.88) inset,
+    5px 5px 11px -1px rgba(0, 0, 0, 0.32), 0px 0px 11px -1px rgba(0, 0, 0, 0.23);
+  background: #ffffff;
+  background: linear-gradient(89.7deg, rgb(31, 30, 30) 0.1%, transparent 1%),
+    linear-gradient(75deg, #c2c2c2 0%, #ffffff 100%);
+}
+
+/* 14 * 2 = 28*/
