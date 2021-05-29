@@ -5,8 +5,11 @@
 }
 
 :root {
-  --keys-width: min(calc(90vw), 1000px);
-  --keys-height: calc(var(--keys-width) * 0.25);
+  --keys-container-width: min(calc(90vw), 1000px);
+  --keys-white-width: calc(calc(100% - 26px) / 15);
+  --keys-height: calc(var(--keys-container-width) * 0.25);
+  --keys-black-width: calc(var(--keys-white-width) * 0.5);
+  --keys-black-height: calc(var(--keys-height) * 0.65);
 }
 
 html,
@@ -24,21 +27,29 @@ body {
 
 .keyboard__container {
   margin: 0px auto;
-  width: var(--keys-width);
+  width: var(--keys-container-width);
+}
+
+.keyboard__keys {
+  position: relative;
 }
 
 .keyboard__key__white__container {
   gap: 2px;
   display: flex;
   flex-wrap: nowrap;
-  width: var(--keys-width);
+  height: var(--keys-height);
   background-color: #141312;
+  width: var(--keys-container-width);
 }
 
 .keyboard__key__white {
-  border-radius: 6px;
+  position: relative;
+  border-radius: 2px;
   background: #ffffff;
   height: var(--keys-height);
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
   width: calc(calc(100% - 26px) / 15);
   box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.88) inset,
     5px 5px 11px -1px rgba(0, 0, 0, 0.79);
@@ -46,12 +57,139 @@ body {
 
 .keyboard__key__white:active,
 .keyboard__key__white.keyboard__key__white--pressed {
-  transition: all 0.2s ease;
+  height: calc(var(--keys-height) * 1.02);
   box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.88) inset,
     5px 5px 11px -1px rgba(0, 0, 0, 0.32), 0px 0px 11px -1px rgba(0, 0, 0, 0.23);
-  background: #ffffff;
-  background: linear-gradient(89.7deg, rgb(31, 30, 30) 0.1%, transparent 1%),
-    linear-gradient(75deg, #c2c2c2 0%, #ffffff 100%);
 }
 
-/* 14 * 2 = 28*/
+.keyboard__key__white:active:nth-child(14)::before,
+.keyboard__key__white:active:nth-child(13)::after,
+.keyboard__key__white:active:nth-child(13)::before,
+.keyboard__key__white:active:nth-child(12)::after,
+.keyboard__key__white:active:nth-child(12)::before,
+.keyboard__key__white:active:nth-child(11)::after,
+.keyboard__key__white:active:nth-child(10)::before,
+.keyboard__key__white:active:nth-child(9)::before,
+.keyboard__key__white:active:nth-child(9)::after,
+.keyboard__key__white:active:nth-child(8)::after,
+.keyboard__key__white:active:nth-child(7)::before,
+.keyboard__key__white:active:nth-child(6)::after,
+.keyboard__key__white:active:nth-child(6)::before,
+.keyboard__key__white:active:nth-child(5)::after,
+.keyboard__key__white:active:nth-child(5)::before,
+.keyboard__key__white:active:nth-child(4)::after,
+.keyboard__key__white:active:nth-child(3)::before,
+.keyboard__key__white:active:nth-child(2)::after,
+.keyboard__key__white:active:nth-child(2)::before,
+.keyboard__key__white:active:nth-child(1)::after {
+  top: 0;
+  content: '';
+  background: #000;
+  position: absolute;
+  height: calc(var(--keys-black-height) * 1.03);
+  box-shadow: 1px 0 1px #131518 inset, 2px 0 1px #14171a inset,
+    -2px 0 0.75px #1a1c1f inset,
+    0 -2px 0.5px #1d1e1f inset 0 0 0.5px 1px #151514;
+}
+
+.keyboard__key__white:active:nth-child(14)::before,
+.keyboard__key__white:active:nth-child(13)::before,
+.keyboard__key__white:active:nth-child(12)::before,
+.keyboard__key__white:active:nth-child(10)::before,
+.keyboard__key__white:active:nth-child(9)::before,
+.keyboard__key__white:active:nth-child(7)::before,
+.keyboard__key__white:active:nth-child(6)::before,
+.keyboard__key__white:active:nth-child(5)::before,
+.keyboard__key__white:active:nth-child(3)::before,
+.keyboard__key__white:active:nth-child(2)::before {
+  left: 0;
+  border-bottom-right-radius: 2px;
+}
+
+.keyboard__key__white:active:nth-child(13)::after,
+.keyboard__key__white:active:nth-child(12)::after,
+.keyboard__key__white:active:nth-child(11)::after,
+.keyboard__key__white:active:nth-child(9)::after,
+.keyboard__key__white:active:nth-child(8)::after,
+.keyboard__key__white:active:nth-child(6)::after,
+.keyboard__key__white:active:nth-child(5)::after,
+.keyboard__key__white:active:nth-child(4)::after,
+.keyboard__key__white:active:nth-child(2)::after,
+.keyboard__key__white:active:nth-child(1)::after {
+  right: 0;
+  border-bottom-left-radius: 2px;
+}
+
+.keyboard__key__white:active:nth-child(14)::before,
+.keyboard__key__white:active:nth-child(13)::after,
+.keyboard__key__white:active:nth-child(12)::after,
+.keyboard__key__white:active:nth-child(9)::after,
+.keyboard__key__white:active:nth-child(9)::before,
+.keyboard__key__white:active:nth-child(8)::after,
+.keyboard__key__white:active:nth-child(7)::before,
+.keyboard__key__white:active:nth-child(3)::before,
+.keyboard__key__white:active:nth-child(2)::before,
+.keyboard__key__white:active:nth-child(2)::after {
+  width: calc(25% - 1px);
+}
+
+.keyboard__key__white:active:nth-child(13)::before,
+.keyboard__key__white:active:nth-child(12)::before,
+.keyboard__key__white:active:nth-child(11)::after,
+.keyboard__key__white:active:nth-child(10)::before,
+.keyboard__key__white:active:nth-child(6)::before,
+.keyboard__key__white:active:nth-child(6)::after,
+.keyboard__key__white:active:nth-child(5)::before,
+.keyboard__key__white:active:nth-child(5)::after,
+.keyboard__key__white:active:nth-child(4)::after,
+.keyboard__key__white:active:nth-child(1)::after {
+  width: calc(25%);
+}
+
+.keyboard__key__black__container {
+  top: 0;
+  gap: 2px;
+  display: flex;
+  flex-wrap: nowrap;
+  position: absolute;
+  pointer-events: none;
+  justify-content: space-evenly;
+  width: var(--keys-container-width);
+  padding: 0px calc(calc(var(--keys-black-width) * 0.5));
+}
+
+.keyboard__key__black {
+  position: relative;
+  border-radius: 6px;
+  border-radius: 2px;
+  pointer-events: all;
+  width: var(--keys-black-width);
+  height: var(--keys-black-height);
+}
+
+.keyboard__key__black.keyboard__key__black--real {
+  background: #141312;
+  background-image: linear-gradient(
+    #151514 1%,
+    #d0d1d3 2%,
+    #414141 3%,
+    #151514 50%,
+    #000000 90%,
+    #393939 91%
+  );
+  box-shadow: 1px 0 1px #131518 inset, 2px 0 1px #14171a inset,
+    -2px 0 0.75px #1a1c1f inset, 0 -2px 0.5px #1d1e1f inset,
+    0 0 0.5px 1px #151514;
+}
+
+.keyboard__key__black.keyboard__key__black--real:active {
+  background-image: linear-gradient(
+    #151514 1%,
+    #6f6f6f 2%,
+    #b0b0b0 3%,
+    #383838 4%,
+    #151514 50%,
+    #000000 94%,
+    #323232 95%
+  );
+}
