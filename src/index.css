@@ -25,13 +25,34 @@ body {
   background-color: white;
 }
 
+.keyboard__body {
+  margin: 24px;
+  border-radius: 3px;
+  background: linear-gradient(
+    #000000 0.2%,
+    #3a3739 0.6%,
+    #807e7f 0.8%,
+    #3a3739 2%,
+    rgb(31, 31, 31) 100%
+  );
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  padding: 24px 24px 0px 24px;
+  box-shadow: 0px 0px 2px 1px rgba(131, 131, 131, 0.75) inset;
+}
+
 .keyboard__container {
   margin: 0px auto;
-  width: var(--keys-container-width);
+  padding: 4px 8px 0px 8px;
+  background-color: #8a0b1a;
+  box-shadow: -2px 0px 5px -1px rgba(0, 0, 0, 0.75) inset,
+    4px 0px 5px -1px rgba(0, 0, 0, 0.75) inset,
+    inset 0 8px 12px -5px rgba(0, 0, 0, 0.9);
 }
 
 .keyboard__keys {
   position: relative;
+  width: var(--keys-container-width);
 }
 
 .keyboard__key__white__container {
@@ -39,7 +60,6 @@ body {
   display: flex;
   flex-wrap: nowrap;
   height: var(--keys-height);
-  background-color: #141312;
   width: var(--keys-container-width);
 }
 
@@ -84,9 +104,9 @@ body {
 .keyboard__key__white:active:nth-child(1)::after {
   top: 0;
   content: '';
-  background: #000;
   position: absolute;
-  height: calc(var(--keys-black-height) * 1.03);
+  background: #46080d;
+  height: calc(var(--keys-black-height) * 1.04);
   box-shadow: 1px 0 1px #131518 inset, 2px 0 1px #14171a inset,
     -2px 0 0.75px #1a1c1f inset,
     0 -2px 0.5px #1d1e1f inset 0 0 0.5px 1px #151514;

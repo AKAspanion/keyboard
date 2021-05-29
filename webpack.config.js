@@ -17,6 +17,7 @@ module.exports = {
     new ESLintPlugin({}),
     new CopyPlugin({
       patterns: [
+        { from: path.resolve(__dirname, 'src/notes'), to: 'notes' },
         { from: path.resolve(__dirname, 'src/index.css'), to: 'index.css' },
         { from: path.resolve(__dirname, 'src/index.html'), to: 'index.html' },
       ],
