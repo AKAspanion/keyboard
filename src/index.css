@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode',
+    Geneva, Verdana, sans-serif;
 }
 
 :root {
@@ -46,8 +48,7 @@ body {
   padding: 4px 8px 0px 8px;
   background-color: #8a0b1a;
   box-shadow: -2px 0px 5px -1px rgba(0, 0, 0, 0.75) inset,
-    4px 0px 5px -1px rgba(0, 0, 0, 0.75) inset,
-    inset 0 8px 12px -5px rgba(0, 0, 0, 0.9);
+    4px 0px 5px -1px rgba(0, 0, 0, 0.75) inset, inset 0 8px 12px -5px rgba(0, 0, 0, 0.9);
 }
 
 .keyboard__keys {
@@ -71,15 +72,14 @@ body {
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   width: calc(calc(100% - 26px) / 15);
-  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.88) inset,
-    5px 5px 11px -1px rgba(0, 0, 0, 0.79);
+  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.88) inset, 5px 5px 11px -1px rgba(0, 0, 0, 0.79);
 }
 
 .keyboard__key__white:active,
 .keyboard__key__white.keyboard__key__white--pressed {
   height: calc(var(--keys-height) * 1.02);
-  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.88) inset,
-    5px 5px 11px -1px rgba(0, 0, 0, 0.32), 0px 0px 11px -1px rgba(0, 0, 0, 0.23);
+  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.88) inset, 5px 5px 11px -1px rgba(0, 0, 0, 0.32),
+    0px 0px 11px -1px rgba(0, 0, 0, 0.23);
 }
 
 .keyboard__key__white:active:nth-child(14)::before,
@@ -107,8 +107,7 @@ body {
   position: absolute;
   background: #46080d;
   height: calc(var(--keys-black-height) * 1.04);
-  box-shadow: 1px 0 1px #131518 inset, 2px 0 1px #14171a inset,
-    -2px 0 0.75px #1a1c1f inset,
+  box-shadow: 1px 0 1px #131518 inset, 2px 0 1px #14171a inset, -2px 0 0.75px #1a1c1f inset,
     0 -2px 0.5px #1d1e1f inset 0 0 0.5px 1px #151514;
 }
 
@@ -197,9 +196,8 @@ body {
     #000000 90%,
     #393939 91%
   );
-  box-shadow: 1px 0 1px #131518 inset, 2px 0 1px #14171a inset,
-    -2px 0 0.75px #1a1c1f inset, 0 -2px 0.5px #1d1e1f inset,
-    0 0 0.5px 1px #151514;
+  box-shadow: 1px 0 1px #131518 inset, 2px 0 1px #14171a inset, -2px 0 0.75px #1a1c1f inset,
+    0 -2px 0.5px #1d1e1f inset, 0 0 0.5px 1px #151514;
 }
 
 .keyboard__key__black.keyboard__key__black--real:active {
@@ -212,4 +210,53 @@ body {
     #000000 94%,
     #323232 95%
   );
+}
+
+.keyboard__screen {
+  width: 30%;
+  height: 140px;
+  position: relative;
+  margin-bottom: 24px;
+  border-radius: 2px;
+  background: rgb(70, 0, 0);
+  box-shadow: inset 1px 1px 2px rgb(0 0 0 / 60%), inset -1px -1px 2px rgb(0 0 0 / 40%);
+}
+
+.keyboard__screen__overlay {
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background-size: auto 4px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.keyboard__list {
+  padding: 8px 0px;
+  list-style: none;
+  text-decoration: none;
+}
+
+.keyboard__list__item {
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin: 0px 12px;
+  padding: 2px 8px;
+  text-decoration: none;
+  font-size: 14px;
+  color: red;
+  border: 2px solid transparent;
+}
+.keyboard__list__item:hover {
+  transition: 0.3s ease;
+  border: 2px solid red;
+  background: rgba(215, 0, 0, 0.2);
 }

@@ -1,5 +1,7 @@
 const whiteKeys = document.querySelectorAll('.keyboard__key__white');
-const blackKeys = document.querySelectorAll('.keyboard__key__black.keyboard__key__black--real');
+const blackKeys = document.querySelectorAll(
+  '.keyboard__key__black.keyboard__key__black--real'
+);
 
 const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'A', 'B', 'C'];
 const blackNotes = ['C', 'D', 'F', 'G', 'A', 'C', 'D', 'F', 'G', 'A'];
