@@ -211,14 +211,5 @@ const closeLoading = () => {
     }
   };
 
-  const startTime = () => {
-    const timeNode = document.getElementById('time');
-    setInterval(() => {
-      const date = new Date();
-      timeNode.innerHTML = date.toLocaleTimeString();
-    }, 1000);
-  };
-
   setNotesInDom();
-  startTime();
 })();
