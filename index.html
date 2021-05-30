@@ -7,19 +7,21 @@
     <link rel="stylesheet" href="./index.css" />
     <title>Keyboard</title>
   </head>
-  <body>
+  <body class="flex-center">
     <div class="keyboard__body">
       <div class="keyboard__controls">
         <div class="keyboard__screen">
           <div class="keyboard__screen__overlay"></div>
-          <ul id="noteList" class="keyboard__list"></ul>
+          <ul id="noteList" class="keyboard__list">
+            <li class="keyboard__list__item">Keyboard 3000</li>
+          </ul>
         </div>
-        <div id="playBtn" class="keyboard__button">
+        <div id="playBtn" class="keyboard__button flex-center">
           <svg viewBox="0 0 24 24">
             <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
           </svg>
         </div>
-        <div id="clearBtn" class="keyboard__button">
+        <div id="clearBtn" class="keyboard__button flex-center">
           <svg viewBox="0 0 24 24">
             <path
               fill="currentColor"
@@ -27,7 +29,7 @@
             />
           </svg>
         </div>
-        <div id="recordBtn" class="keyboard__button">
+        <div id="recordBtn" class="keyboard__button flex-center">
           <svg viewBox="0 0 24 24">
             <path
               fill="currentColor"
@@ -35,7 +37,7 @@
             />
           </svg>
         </div>
-        <div id="saveBtn" class="keyboard__button">
+        <div id="saveBtn" class="keyboard__button flex-center">
           <svg viewBox="0 0 24 24">
             <path
               fill="currentColor"
@@ -43,7 +45,7 @@
             />
           </svg>
         </div>
-        <div id="refreshBtn" class="keyboard__button">
+        <div id="refreshBtn" class="keyboard__button flex-center">
           <svg viewBox="0 0 24 24">
             <path
               fill="currentColor"
@@ -89,6 +91,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div id="loader" class="loading__body flex-center">
+      <div class="loader"></div>
     </div>
     <script src="./bundle.js"></script>
   </body>
