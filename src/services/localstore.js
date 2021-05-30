@@ -13,13 +13,14 @@ export const deleteNote = async (id) => {
       return [];
     }
 
-    notes = notes.filter((n) => n.id != id);
+    if (notes.length) {
+      notes = notes.filter((n) => n.id != id);
+    }
 
     await localforage.setItem('key-notes', [...notes]);
 
     return notes;
   } catch (err) {
-    // This code runs if there were any errors.
     console.log(err);
   }
 };
@@ -34,7 +35,6 @@ export const getNotes = async () => {
 
     return notes;
   } catch (err) {
-    // This code runs if there were any errors.
     console.log(err);
   }
 };
@@ -66,7 +66,6 @@ export const addNote = async (newNote) => {
 
     return allNotes;
   } catch (err) {
-    // This code runs if there were any errors.
     console.log(err);
   }
 };

@@ -1,4 +1,5 @@
 import { addNote, deleteNote, getNotes } from './services/localstore';
+import { addNotesToDOM, addWelcomeToDOM, toggleClasses } from './dom';
 import { whiteNotes, blackNotes } from './constants/';
 import { preLoad } from './utils/';
 
@@ -180,31 +181,19 @@ const closeLoading = () => {
   };
 
   const toggelButtonPress = (btn, flag) => {
-    if (flag) {
-      btn.classList.add('keyboard__button--pressed');
-    } else {
-      btn.classList.remove('keyboard__button--pressed');
-    }
+    toggleClasses(btn, flag, ['keyboard__button--pressed']);
   };
 
   const toggelKeyPress = (data, flag) => {
     const { type, index } = data;
 
-    const toggle = (key, className) => {
-      if (flag) {
-        key.classList.add(...className);
-      } else {
-        key.classList.remove(...className);
-      }
-    };
-
     if (type === 'white') {
-      toggle(whiteKeys[index], [
+      toggleClasses(whiteKeys[index], flag, [
         `keyboard__key__white__${index + 1}--pressed`,
         'keyboard__key__white--pressed',
       ]);
     } else if (type === 'black') {
-      toggle(blackKeys[index], ['keyboard__key__black--pressed']);
+      toggleClasses(blackKeys[index], flag, ['keyboard__key__black--pressed']);
     }
   };
 
@@ -212,33 +201,24 @@ const closeLoading = () => {
     try {
       const notes = await getNotes();
 
-      if (!notes.length) {
-        return;
+      if (notes.length) {
+        addNotesToDOM(trackList, notes, selectedTrack, onListItemClick);
+      } else {
+        addWelcomeToDOM(trackList);
       }
-
-      trackList.innerHTML = '';
-
-      notes.forEach((note) => {
-        const node = document.createElement('li');
-
-        node.setAttribute('data-id', note.id);
-        node.classList.add('keyboard__list__item');
-
-        if (selectedTrack == note.id) {
-          node.classList.add('keyboard__list__item--selected');
-        }
-
-        node.addEventListener('click', onListItemClick);
-
-        const text = document.createTextNode(`Track ${note.id}`);
-
-        node.appendChild(text);
-        trackList.appendChild(node);
-      });
     } catch (error) {
       console.log(error);
     }
   };
 
+  const startTime = () => {
+    const timeNode = document.getElementById('time');
+    setInterval(() => {
+      const date = new Date();
+      timeNode.innerHTML = date.toLocaleTimeString();
+    }, 1000);
+  };
+
   setNotesInDom();
+  startTime();
 })();
