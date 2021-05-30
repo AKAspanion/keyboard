@@ -442,4 +442,7 @@ body {
     height: 100vw;
     transform: rotate(90deg);
   }
+  svg {
+    transform: scale(0.75);
+  }
 }
