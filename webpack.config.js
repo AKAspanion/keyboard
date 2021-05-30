@@ -20,6 +20,7 @@ module.exports = {
         { from: path.resolve(__dirname, 'src/notes'), to: 'notes' },
         { from: path.resolve(__dirname, 'src/index.css'), to: 'index.css' },
         { from: path.resolve(__dirname, 'src/index.html'), to: 'index.html' },
+        { from: path.resolve(__dirname, 'src/favicon.ico'), to: 'favicon.ico' },
       ],
     }),
   ],
