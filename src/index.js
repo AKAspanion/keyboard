@@ -1,39 +1,236 @@
-const whiteKeys = document.querySelectorAll('.keyboard__key__white');
-const blackKeys = document.querySelectorAll(
-  '.keyboard__key__black.keyboard__key__black--real'
-);
+import { addNote, deleteNote, getNotes } from './services/localstore';
 
-const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'A', 'B', 'C'];
-const blackNotes = ['C', 'D', 'F', 'G', 'A', 'C', 'D', 'F', 'G', 'A'];
+(async () => {
+  const trackList = document.getElementById('noteList');
 
-const metaData = {
-  white: {},
-  black: {},
-};
-whiteNotes.forEach((note, index) => {
-  key = `key${index}`;
-  file = `./notes/piano-${note.toLowerCase()}.wav`;
+  const playBtn = document.getElementById('playBtn');
+  const saveBtn = document.getElementById('saveBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const recordBtn = document.getElementById('recordBtn');
+  const refreshBtn = document.getElementById('refreshBtn');
 
-  metaData['white'][key] = { file, note, index };
-});
+  const whiteKeys = document.querySelectorAll('.keyboard__key__white');
+  const blackKeys = document.querySelectorAll('.keyboard__key__black.keyboard__key__black--real');
 
-blackNotes.forEach((note, index) => {
-  key = `key${index}`;
-  file = `./notes/piano-${note.toLowerCase()}-sharp.wav`;
+  const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'A', 'B', 'C'];
+  const blackNotes = ['C', 'D', 'F', 'G', 'A', 'C', 'D', 'F', 'G', 'A'];
 
-  metaData['black'][key] = { file, note, index };
-});
+  let track = [];
+  let timeout = 0;
+  let record = false;
+  let selectedTrack = 0;
 
-const clickKeyBoard = (type, num) => {
-  const { file } = metaData[type][`key${num}`];
-  const audio = new Audio(file);
-  audio.play();
-};
+  const metaData = {
+    white: {},
+    black: {},
+  };
+  whiteNotes.forEach((note, index) => {
+    const key = `key${index}`;
+    const file = `./notes/piano-${note.toLowerCase()}.wav`;
 
-whiteKeys.forEach((key, index) => {
-  key.addEventListener('click', () => clickKeyBoard('white', index));
-});
+    metaData['white'][key] = { type: 'white', file, note, index };
+  });
 
-blackKeys.forEach((key, index) => {
-  key.addEventListener('click', () => clickKeyBoard('black', index));
-});
+  blackNotes.forEach((note, index) => {
+    const key = `key${index}`;
+    const file = `./notes/piano-${note.toLowerCase()}-sharp.wav`;
+
+    metaData['black'][key] = { type: 'black', file, note, index };
+  });
+
+  const clickKeyBoard = (type, num) => {
+    const data = metaData[type][`key${num}`];
+    const audio = new Audio(data.file);
+    audio.play();
+
+    if (record) {
+      track.push({ data, time: new Date().valueOf() });
+    }
+  };
+
+  whiteKeys.forEach((key, index) => {
+    key.addEventListener('click', () => clickKeyBoard('white', index));
+  });
+
+  blackKeys.forEach((key, index) => {
+    key.addEventListener('click', () => clickKeyBoard('black', index));
+  });
+
+  const onListItemClick = (data) => {
+    toggelButtonPress(clearBtn, true);
+    const itemId = data.target.dataset.id;
+    selectedTrack = itemId;
+
+    setNotesInDom();
+  };
+
+  playBtn.addEventListener('click', async () => {
+    record = false;
+    toggelButtonPress(recordBtn, false);
+
+    if (selectedTrack) {
+      const notes = await getNotes();
+      const note = notes.find((n) => n.id == selectedTrack);
+
+      if (note && note.notes) {
+        track = note.notes;
+      }
+    }
+
+    if (track.length) {
+      clearAllTimeouts();
+      toggelButtonPress(playBtn, true);
+      toggelButtonPress(clearBtn, true);
+
+      const firstTrack = track[0];
+      const initialTime = firstTrack.time;
+
+      track.forEach((t, i) => {
+        const { data, time } = t;
+        timeout = setTimeout(() => {
+          const audio = new Audio(data.file);
+          audio.play();
+
+          toggelKeyPress(data, true);
+          setTimeout(() => {
+            toggelKeyPress(data, false);
+          }, 100);
+
+          if (i === track.length - 1) {
+            toggelButtonPress(playBtn, false);
+          }
+        }, time - initialTime + 200);
+      });
+    } else {
+      toggelButtonPress(clearBtn, false);
+    }
+  });
+
+  clearBtn.addEventListener('click', async () => {
+    clearAllTimeouts();
+    toggelButtonPress(recordBtn, false);
+    toggelButtonPress(clearBtn, false);
+    toggelButtonPress(playBtn, false);
+    record = false;
+    track = [];
+
+    if (selectedTrack) {
+      await deleteNote(selectedTrack);
+      selectedTrack = 0;
+      setNotesInDom();
+    }
+  });
+
+  recordBtn.addEventListener('click', () => {
+    if (selectedTrack) {
+      return;
+    }
+
+    clearAllTimeouts();
+    toggelButtonPress(playBtn, false);
+    record = !record;
+
+    if (record) {
+      track = [];
+      toggelButtonPress(clearBtn, false);
+    }
+
+    toggelButtonPress(recordBtn, record);
+  });
+
+  saveBtn.addEventListener('click', async () => {
+    if (selectedTrack) {
+      return;
+    }
+
+    clearAllTimeouts();
+
+    if (track.length) {
+      await addNote(track);
+      await setNotesInDom();
+
+      trackList.scrollTop = trackList.scrollHeight;
+    }
+  });
+
+  refreshBtn.addEventListener('click', async () => {
+    track = [];
+    record = false;
+    selectedTrack = 0;
+
+    clearAllTimeouts();
+    toggelButtonPress(playBtn, false);
+    toggelButtonPress(clearBtn, false);
+    toggelButtonPress(recordBtn, false);
+    setNotesInDom();
+  });
+
+  const clearAllTimeouts = () => {
+    while (timeout) {
+      clearTimeout(timeout--);
+    }
+  };
+
+  const toggelButtonPress = (btn, flag) => {
+    if (flag) {
+      btn.classList.add('keyboard__button--pressed');
+    } else {
+      btn.classList.remove('keyboard__button--pressed');
+    }
+  };
+
+  const toggelKeyPress = (data, flag) => {
+    const { type, index } = data;
+
+    const toggle = (key, className) => {
+      if (flag) {
+        key.classList.add(...className);
+      } else {
+        key.classList.remove(...className);
+      }
+    };
+
+    if (type === 'white') {
+      toggle(whiteKeys[index], [
+        `keyboard__key__white__${index + 1}--pressed`,
+        'keyboard__key__white--pressed',
+      ]);
+    } else if (type === 'black') {
+      toggle(blackKeys[index], ['keyboard__key__black--pressed']);
+    }
+  };
+
+  const setNotesInDom = async () => {
+    try {
+      const notes = await getNotes();
+
+      if (!notes.length) {
+        return;
+      }
+
+      trackList.innerHTML = '';
+
+      notes.forEach((note) => {
+        const node = document.createElement('li');
+
+        node.setAttribute('data-id', note.id);
+        node.classList.add('keyboard__list__item');
+
+        if (selectedTrack == note.id) {
+          node.classList.add('keyboard__list__item--selected');
+        }
+
+        node.addEventListener('click', onListItemClick);
+
+        const text = document.createTextNode(`Track ${note.id}`);
+
+        node.appendChild(text);
+        trackList.appendChild(node);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setNotesInDom();
+})();
