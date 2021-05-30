@@ -431,9 +431,14 @@ body {
   :root {
     --keyboard-gap: 16px;
     --screen-height: 100px;
-  }
-  body {
-    transform: rotate(90deg);
     --keys-container-width: min(calc(90vh), 800px);
+  }
+  .keyboard__body {
+    transform: rotate(90deg);
+  }
+  .loading__body {
+    width: 100vh;
+    height: 100vw;
+    transform: rotate(90deg);
   }
 }
