@@ -434,7 +434,6 @@ body {
     --keys-container-width: min(calc(80vh), 800px);
   }
   .keyboard__body {
-    padding: 32px;
     transform: rotate(90deg);
   }
   .loading__body {
