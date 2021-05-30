@@ -1,6 +1,17 @@
 import { addNote, deleteNote, getNotes } from './services/localstore';
+import { whiteNotes, blackNotes } from './constants/';
+import { preLoad } from './utils/';
+
+const closeLoading = () => {
+  const loader = document.getElementById('loader');
+  loader.style.display = 'none';
+};
 
 (async () => {
+  await preLoad();
+
+  closeLoading();
+
   const trackList = document.getElementById('noteList');
 
   const playBtn = document.getElementById('playBtn');
@@ -11,9 +22,6 @@ import { addNote, deleteNote, getNotes } from './services/localstore';
 
   const whiteKeys = document.querySelectorAll('.keyboard__key__white');
   const blackKeys = document.querySelectorAll('.keyboard__key__black.keyboard__key__black--real');
-
-  const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'A', 'B', 'C'];
-  const blackNotes = ['C', 'D', 'F', 'G', 'A', 'C', 'D', 'F', 'G', 'A'];
 
   let track = [];
   let timeout = 0;
