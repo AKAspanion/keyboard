@@ -1,22 +1,25 @@
 {
   "name": "keyboard",
   "version": "1.0.0",
-  "description": "",
+  "description": "🎹 A simple piano keyboard made using CSS",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "serve": "webpack serve",
+    "dev": "webpack serve",
     "deploy": "gh-pages -d dist",
-    "predeploy": "npm install && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "predeploy": "npm install && npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AKAspanion/keyboard.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "css",
+    "piano",
+    "keyboard"
+  ],
+  "author": "Ankit Kumar Pandit",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/AKAspanion/keyboard/issues"
   },
@@ -24,6 +27,7 @@
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^8.1.1",
+    "esbuild-loader": "^3.0.1",
     "eslint": "^7.26.0",
     "eslint-webpack-plugin": "^2.5.4",
     "gh-pages": "^3.1.0",
